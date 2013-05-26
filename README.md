@@ -1,4 +1,4 @@
-go-balanced
+balanced-go
 =======
 
 Go library for Balanced Payments API
