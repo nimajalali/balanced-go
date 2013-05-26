@@ -1,5 +1,4 @@
 balanced-go
-<<<<<<< HEAD
 =======
 
 Go library for Balanced Payments API
@@ -27,8 +26,3 @@ Dependencies
 ----------
 
 TODO
-=======
-===========
-
-Coming soon! Wrapping up testing before push.
->>>>>>> 7bf9c5b8f97adc13a77ca0c13064483bf0693151
