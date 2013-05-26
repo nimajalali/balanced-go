@@ -80,11 +80,11 @@ func deleteBankAccount(t *testing.T, bankAccount *BankAccount) {
 func verifyBankAccount(t *testing.T, bankAccount *BankAccount) *Verification {
 	verification, err := VerifyBankAccount(bankAccount.Uri)
 	if err != nil {
-		t.Fatalf("Failed to generate verification for bank account: ", err)
+		t.Fatalf("Failed to generate verification for bank account: %v", err)
 	}
 
 	if len(verification.Id) == 0 {
-		t.Fatalf("Invalid verification for Bank Account created: ",
+		t.Fatalf("Invalid verification for Bank Account created: %v",
 			verification)
 	}
 
@@ -94,11 +94,11 @@ func verifyBankAccount(t *testing.T, bankAccount *BankAccount) *Verification {
 func retrieveBankAccountVerification(t *testing.T, v *Verification) {
 	retrievedVerification, err := RetrieveBankAccountVerification(v.Uri)
 	if err != nil {
-		t.Fatalf("Failed to retrieve verification for bank account: ", err)
+		t.Fatalf("Failed to retrieve verification for bank account: %v", err)
 	}
 
 	if retrievedVerification.Id != v.Id {
-		t.Fatalf("Invalid verification for Bank Account retrieved: ",
+		t.Fatalf("Invalid verification for Bank Account retrieved: %v",
 			retrievedVerification)
 	}
 }
@@ -120,7 +120,7 @@ func listAllBankACcountVerifications(t *testing.T, b *BankAccount,
 func confirmBankAccountVerification(t *testing.T, v *Verification) {
 	confirmedVerification, err := ConfirmBankAccountVerification(v.Uri, 1, 1)
 	if err != nil {
-		t.Fatalf("Failed to confirm verification for bank account: ", err)
+		t.Fatalf("Failed to confirm verification for bank account: %v", err)
 	}
 
 	if confirmedVerification.State != VerificationTypeVerified {

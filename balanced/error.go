@@ -7,14 +7,14 @@ import (
 // Custom Error to handle balanced api responses. Implements
 // error interface
 type ApiError struct {
-	Additional   string `json:"additional, omitempty"`
-	CategoryType string `json:"category_type, omitempty"`
-	CategoryCode string `json:"category_code, omitempty"`
-	Description  string `json:"description, omitempty"`
-	Extras       Extras `json:"extras, omitempty"`
-	RequestId    string `json:"request_id, omitempty"`
-	StatusCode   int    `json:"status_code, omitempty"`
-	Status       string `json:"status, omitempty"`
+	Additional   string `json:"additional,omitempty"`
+	CategoryType string `json:"category_type,omitempty"`
+	CategoryCode string `json:"category_code,omitempty"`
+	Description  string `json:"description,omitempty"`
+	Extras       Extras `json:"extras,omitempty"`
+	RequestId    string `json:"request_id,omitempty"`
+	StatusCode   int    `json:"status_code,omitempty"`
+	Status       string `json:"status,omitempty"`
 }
 
 type Extras map[string]string

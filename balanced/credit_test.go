@@ -5,8 +5,8 @@ import (
 )
 
 func TestCredit(t *testing.T) {
-	credit := creditNewBankAccount(t)
-	t.Log(credit)
+	// credit := creditNewBankAccount(t)
+	// t.Log(credit)
 }
 
 func creditNewBankAccount(t *testing.T) *Credit {

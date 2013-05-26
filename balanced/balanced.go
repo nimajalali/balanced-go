@@ -4,7 +4,6 @@
 package balanced
 
 import (
-	"encoding/json"
 	"flag"
 	"github.com/stathat/jconfig"
 	"log"
@@ -26,9 +25,6 @@ func init() {
 	flag.Parse()
 
 	if stage == "test" {
-		// apiRoot = testApiRoot
-		// apiKey = "ec7e126692cd11e28157026ba7f8ec28"
-		// marketplaceId = "TEST-MP7cnju2M0ojMCpPWS8geAPK"
 		setupTestEnvironment()
 	} else {
 		// Retrieve config from balanced.conf
@@ -48,36 +44,26 @@ func SetupEnvironment(root, key, marketId string) {
 }
 
 // Used when running test, or when no config file was specified.
+// The api invoked by this function is not a public endpoint at balanced.
+// May not work in the future.
 func setupTestEnvironment() {
 	apiRoot = testApiRoot
 
 	// Get test api key from balanced
-	resp, err := post(apiKeyUri, nil)
+	key := ApiKey{}
+	err := post(apiKeyUri, nil, &key)
 	if err != nil {
 		log.Println("Unable to generate test key")
-		os.Exit(1)
-	}
-
-	// Attempt to parse response into ApiKey
-	key := ApiKey{}
-	if err := json.Unmarshal(resp, &key); err != nil {
-		log.Println("Unable to parse generated test key")
 		os.Exit(1)
 	}
 
 	apiKey = key.Secret
 
 	// Get test marketplace from balanced
-	resp, err = post(marketplaceUri, nil)
+	marketplace := Marketplace{}
+	err = post(marketplaceUri, nil, &marketplace)
 	if err != nil {
 		log.Println("Unable to generate test marketplace")
-		os.Exit(1)
-	}
-
-	// Attempt to parse response into ApiKey
-	marketplace := Marketplace{}
-	if err := json.Unmarshal(resp, &marketplace); err != nil {
-		log.Println("Unable to parse generated test marketplace")
 		os.Exit(1)
 	}
 
