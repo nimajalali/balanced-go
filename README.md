@@ -1,28 +1,19 @@
 balanced-go
-=======
+===========
 
-Go library for Balanced Payments API
+[Go language](http://golang.org/) library for [Balanced](https://www.balancedpayments.com/)
 
 Installation
-------------
+============
 
-Use `go install`:
+	go get github.com/njalali/balanced-go/balanced
 
-    go install github.com/njalali/balanced-go
-
-If you are building your code with `goinstall`, you can skip the previous step and just
-import `balanced-go` as follows:
-
-    import (
-            "github.com/njalali/balanced-go"
-    )
-
-Usage
------
+Example
+=======
 
 TODO
 
-Dependencies
-----------
+Configuration
+=============
 
 TODO
