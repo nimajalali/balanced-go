@@ -6,7 +6,7 @@ balanced-go
 Installation
 ============
 
-	go get github.com/njalali/balanced-go/balanced
+	go get github.com/nimajalali/balanced-go
 
 Example
 =======

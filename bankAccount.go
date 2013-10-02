@@ -15,17 +15,17 @@ const (
 )
 
 type BankAccount struct {
+	ApiDefaultResponse
 	AccountNumber    string    `json:"account_number,omitempty"`
-	AccountUri       string    `json:"account_uri,omitempty"`
+	AccountType      string    `json:"account_type,omitempty"`
 	BankCode         string    `json:"bank_account,omitempty"`
 	BankName         string    `json:"bank_name,omitempty"`
 	CanDebit         bool      `json:"can_debit,omitempty"`
 	CreatedAt        time.Time `json:"created_at,omitempty"`
 	CreditsUri       string    `json:"credits_uri,omitempty"`
+	DebitsUri        string    `json:"debits_uri,omitempty"`
 	Fingerprint      string    `json:"fingerprint,omitempty"`
 	Id               string    `json:"id,omitempty"`
-	IsValid          bool      `json:"is_valid,omitempty"`
-	LastFour         string    `json:"last_four,omitempty"`
 	Meta             MetaType  `json:"meta,omitempty"`
 	Name             string    `json:"name,omitempty"`
 	RoutingNumber    string    `json:"routing_number,omitempty"`
@@ -36,13 +36,16 @@ type BankAccount struct {
 }
 
 type ListOfBankAccounts struct {
+	ApiDefaultResponse
 	Items  []BankAccount `json:"items,omitempty"`
 	Limit  int           `json:"limit,omitempty"`
 	Offset int           `json:"offset,omitempty"`
 	Total  int           `json:"total,omitempty"`
+	Uri    string        `json:"uri,omitempty"`
 }
 
 type Verification struct {
+	ApiDefaultResponse
 	Attempts          int    `json:"attempts,omitempty"`
 	Id                string `json:"id,omitempty"`
 	RemainingAttempts int    `json:"remaining_attempts,omitempty"`
@@ -51,6 +54,7 @@ type Verification struct {
 }
 
 type ListOfVerifications struct {
+	ApiDefaultResponse
 	FirstUri    string         `json:"first_uri,omitempty"`
 	Items       []Verification `json:"items,omitempty"`
 	LastUri     string         `json:"last_uri,omitempty"`

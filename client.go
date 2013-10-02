@@ -3,9 +3,9 @@ package balanced
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -13,8 +13,10 @@ import (
 )
 
 const (
-	version   = "0.0.1"
-	userAgent = "balanced-go/" + version
+	version      = "0.0.1"
+	userAgent    = "balanced-go/" + version
+	responseType = "application/json"
+	contentType  = "application/x-www-form-urlencoded"
 )
 
 func get(path string, payload url.Values, out interface{}) error {
@@ -55,35 +57,28 @@ func request(method, path string, payload url.Values, out interface{}) error {
 	// Build Request
 	req, err := http.NewRequest(method, uri.String(), body)
 	if err != nil {
-		log.Printf("Balanced API: Error creating %v request message.", method)
-		return err
+		return fmt.Errorf("Balanced API: Error creating %v request %g", method, err)
 	}
 
 	// Add Headers
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Content-Type", contentType)
+	req.Header.Set("Accept", responseType)
 	req.Header.Set("User-Agent", userAgent)
 
 	// Add Basic Authentication
-	if len(apiKey) != 0 {
-		// Balanced does not have a traditional username and password. Just a key
-		// that's passed in as username, password is left empty.
-		req.SetBasicAuth(apiKey, "")
-	}
+	// Balanced does not have a traditional username and password. Just a key
+	// that's passed in as username, password is left empty.
+	req.SetBasicAuth(apiKey, "")
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		log.Printf("Balanced API: Error sending %v request message.", method)
-		return err
+		return fmt.Errorf("Balanced API: Error sending %v request %g", method, err)
 	}
-	if resp != nil {
-		defer resp.Body.Close()
-	}
+	defer resp.Body.Close()
 
 	respBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Println("Error reading response bytes.")
-		return err
+		return fmt.Errorf("Balanced API: Error reading response bytes %g", err)
 	}
 
 	// Attempt to parse response as a balanced api error
@@ -91,15 +86,14 @@ func request(method, path string, payload url.Values, out interface{}) error {
 	if err := json.Unmarshal(respBytes, &apiError); err == nil {
 		// Check if api error is valid
 		if len(apiError.Status) != 0 {
-			return &apiError
+			return fmt.Errorf("Balanced API: Responded with error %g", apiError)
 		}
 	}
 
 	// Attempt to parse response into out
 	if out != nil {
 		if err := json.Unmarshal(respBytes, out); err != nil {
-			log.Printf("Balanced API: Error parsing response message: %v ", err.Error())
-			return err
+			return fmt.Errorf("Balanced API: Unable to parse response message %g", err)
 		}
 	}
 
